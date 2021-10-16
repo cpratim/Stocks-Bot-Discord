@@ -1,0 +1,10 @@
+plotly==4.14.1
+yfinance==0.1.55
+holidays==0.10.4
+pandas==1.2.0
+requests==2.22.0
+discord.py==1.5.1
+pymongo==3.11.2
+psutil==5.8.0
+kaleido==0.1.0
+dnspython==2.0.0
