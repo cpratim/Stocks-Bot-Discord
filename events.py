@@ -388,6 +388,41 @@ async def liquidate(ctx):
     embed = add_embed(f"Portfolio Liquidated", fields=fields, author=ctx.author, inline=True)
     await ctx.send(embed=embed)
 
+@bot.command()
+async def leaders(ctx):
+    first = -1
+    try:
+        ports, i, fields = ledger.get_all_owned(), 1, []
+        worths = {}
+        for id in ports:
+            worth = ledger.get_balance(id)
+            if worth != INITIAL_BALANCE or len(ports[id]) > 0:
+                for sym, qty, tp, ep in ports[id]:
+                    lp = stocks.latest_price(sym)
+                    if tp == "long":
+                        worth += qty * lp
+                    else:
+                        worth += qty * (2 * ep - lp)
+                worths[id] = float(worth)
+        sorted_worths = sorted(worths.items(), key=operator.itemgetter(1))
+        sorted_worths.reverse()
+
+        for id, bal in sorted_worths:
+            if i == 1:
+                first = int(id)
+            user = await bot.fetch_user(int(id))
+            if ledger.get_name(id) != user.name:
+                ledger.set_name(id, user.name)
+            fields.append((f"{i}: {user.name}#{user.discriminator}", f"Net Worth: ${rnd(bal)}"))
+            i += 1
+        first_user = await bot.fetch_user(first)
+        footer = f"Updated at {sdate()}"
+        embed = add_embed(
+            title="Leaderboard", fields=fields, thumbnail=first_user.avatar_url, footer=footer
+        )
+        await ctx.send(embed = embed)
+    except:
+        pass
 
 @tasks.loop(seconds=600)
 async def leaderboard():
@@ -435,7 +470,7 @@ async def leaderboard():
                     await channel.purge(limit=100)
                     await channel.send(embed=embed)
     except Exception as e:
-        continue
+        pass
 
 @tasks.loop(hours=7 * 24)
 async def add_all():
