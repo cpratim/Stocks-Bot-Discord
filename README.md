@@ -6,17 +6,19 @@ Stocks Bot: Discord bot where you can buy stocks with fake cash and compete with
 
 ## API's Used
 
-### 1. Discord Developers API (https://discord.com/developers/)
+### Discord Developers API (https://discord.com/developers/)
 
 Connected code with discord application
 
-### 2. IEXCloud REST API (https://www.iexcloud.io/)
+### IEXCloud REST API (https://www.iexcloud.io/)
 
 Handled collection of stock and pricing data
 
-### 3. MongoDB Database API (https://www.mongodb.com/)
+### MongoDB Database API (https://www.mongodb.com/)
 
 Stored portfolios of users
+
+## Bot Functions
 
 ### Buying
 
@@ -32,7 +34,7 @@ Stored portfolios of users
 
 ### Checking Leaderboard
 
-![screen-gif](images/leaderboard.gif)
+![screen-gif](images/leaders.gif)
 
 ### Viewing Commands on Discord
 
